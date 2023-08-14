@@ -698,7 +698,7 @@ class QgisCplusMain(QtWidgets.QDockWidget, WidgetUi):
                     "OUTPUT": output_file,
                 }
 
-                log(f"Used parameters for highest position analysis {alg_params}")
+                log(f"Used parameters for highest position analysis: {alg_params}")
 
                 alg = QgsApplication.processingRegistry().algorithmById(
                     "native:highestpositioninrasterstack"
@@ -745,6 +745,30 @@ class QgisCplusMain(QtWidgets.QDockWidget, WidgetUi):
             )
             return
 
+    def transfrom_extent(self, extent, source_crs, dest_crs):
+        """Transforms the passed extent into the destionation crs
+
+         :param extent: Target extent
+        :type extent: SpatialExtent
+
+        :param source_crs: Source CRS of the passed extent
+        :type source_crs: QgsCoordinateReferenceSystem
+
+        :param dest_crs: Destination CRS
+        :type dest_crs: QgsCoordinateReferenceSystem
+        """
+
+        box = QgsRectangle(
+            float(extent.bbox[0]),
+            float(extent.bbox[1]),
+            float(extent.bbox[2]),
+            float(extent.bbox[3]),
+        )
+        transform = QgsCoordinateTransform(source_crs, dest_crs, QgsProject.instance())
+        transformed_extent = transform.transformBoundingBox(box)
+
+        return tranformed_extent
+
     def main_task(self):
         """Serves as a QgsTask function for the main task that contains
         smaller sub-tasks running the actual processing calculations.
@@ -784,7 +808,22 @@ class QgisCplusMain(QtWidgets.QDockWidget, WidgetUi):
 
         for model in models:
             if not model.pathways:
-                return False
+                if model.layer is not None:
+                    source_crs = QgsCoordinateReferenceSystem("EPSG:4326")
+                    transformed_extent = self.transform_extent(
+                        extent, source_crs, layer.crs()
+                    )
+
+                    extent_string = (
+                        f"{transformed_extent.xMinimum()},{transformed_extent.xMaximum()},"
+                        f"{transformed_extent.yMinimum()},{transformed_extent.yMaximum()}"
+                        f" [{layer.crs().authid()}]"
+                    )
+                    self.run_models_analysis(
+                        models, priority_layers_groups, extent_string
+                    )
+                else:
+                    return False
 
             new_ims_directory = f"{self.scenario_directory}/pathways_carbon_layers"
             carbon_coefficient = float(
@@ -817,19 +856,10 @@ class QgisCplusMain(QtWidgets.QDockWidget, WidgetUi):
                         )
                 expression = " + ".join(basenames)
 
-                box = QgsRectangle(
-                    float(extent.bbox[0]),
-                    float(extent.bbox[1]),
-                    float(extent.bbox[2]),
-                    float(extent.bbox[3]),
-                )
-
                 source_crs = QgsCoordinateReferenceSystem("EPSG:4326")
                 dest_crs = QgsRasterLayer(layers[0]).crs()
-                transform = QgsCoordinateTransform(
-                    source_crs, dest_crs, QgsProject.instance()
-                )
-                transformed_extent = transform.transformBoundingBox(box)
+
+                transformed_extent = self.transform_extent(extent, source_crs, dest_crs)
 
                 extent_string = (
                     f"{transformed_extent.xMinimum()},{transformed_extent.xMaximum()},"
@@ -957,15 +987,21 @@ class QgisCplusMain(QtWidgets.QDockWidget, WidgetUi):
         self.progress_dialog.scenario_name = tr("implementation models")
 
         for model in models:
-            if not model.pathways:
-                return False
-
-            basenames = []
-            layers = []
             new_ims_directory = f"{self.scenario_directory}/implementation_models"
             FileUtils.create_new_dir(new_ims_directory)
             file_name = clean_filename(model.name.replace(" ", "_"))
 
+            basenames = []
+            layers = []
+            if not model.pathways:
+                if model.layer is not None:
+                    shutil.copy(str(model.layer.source()), new_ims_directory)
+                    if model_count == len(models) - 1:
+                        self.run_normalization_analysis(
+                            models, priority_layers_groups, extent
+                        )
+            else:
+                continue
             output_file = f"{new_ims_directory}/{file_name}_{str(uuid.uuid4())[:4]}.tif"
 
             for pathway in model.pathways:
@@ -1088,7 +1124,7 @@ class QgisCplusMain(QtWidgets.QDockWidget, WidgetUi):
         for model in models:
             if not model.layer:
                 log(f"There is no raster layer for the model {model.name}")
-                return False
+                continue
 
             basenames = []
             layers = []
