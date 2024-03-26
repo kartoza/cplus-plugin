@@ -1,0 +1,4 @@
+site
+templates/styles.scss
+pdfs/*.pdf
+mkdocs.yml

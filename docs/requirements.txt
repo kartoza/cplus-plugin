@@ -1,0 +1,23 @@
+#Alternative for pdf creation - broken on nixos and lately ubuntu
+mkdocs-with-pdf
+mdx_gh_links
+mkdocs-pdf-export-plugin
+mkdocs-redirects
+mkdocs-enumerate-headings-plugin
+mkdocs-git-revision-date-localized-plugin
+# needed for the create-uuid.py helper script
+shortuuid
+black
+cffi
+# Needed for PDF back page QR Code
+qrcode
+mkdocs-git-revision-date-localized-plugin == 0.11.1
+mkdocs-material-extensions == 1.0.3
+mkdocs-material == 8.1.7
+mkdocstrings-python == 1.6.0
+mkdocs-video == 1.1.0
+mkdocs == 1.2.3
+pymdown-extensions == 9.1
+# Using more recent version of pygments will give an 'outfile' error when building
+pygments == 2.11.2
+jinja2 == 3.0.3

@@ -419,29 +419,17 @@ def _get_metadata() -> typing.Dict:
     with config_path.open("r") as fh:
         conf = json.load(fh)
     general_plugin_config = conf["general"]
+    changelog = conf["general"]["changelog"]
+
     metadata = general_plugin_config
 
     metadata.update(
         {
             "tags": ", ".join(general_plugin_config.get("tags", [])),
-            "changelog": _changelog(),
+            "changelog": changelog,
         }
     )
     return metadata
-
-
-def _changelog() -> str:
-    """Reads the changelog content from a config file.
-
-    :returns: Plugin changelog
-    :type: str
-    """
-    path = LOCAL_ROOT_DIR / "docs/plugin/changelog.txt"
-
-    with path.open() as fh:
-        changelog_file = fh.read()
-
-    return changelog_file
 
 
 def _add_to_zip(directory: Path, zip_handler: zipfile.ZipFile, arc_path_base: Path):

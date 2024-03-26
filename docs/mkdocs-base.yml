@@ -1,0 +1,63 @@
+# See mkdocs base and the create-mkdocs* 
+# scripts for how this is used
+site_name: CPLUS
+site_description: 'Climate Positive Land Use Strategy (CPLUS) decision support tool.'
+site_author: 'Conservation International'
+docs_dir: src/
+repo_name: 'kartoza/cplus-plugin'
+repo_url: 'https://github.com/kartoza/cplus-plugin'
+edit_uri: "https://github.com/kartoza/cplus-plugin/blob/main/docs/src/"
+#site_dir: docs
+copyright: Copyright Conservation International, 2023
+
+nav:
+  - Home: index.md
+  - Users:
+      - user/index.md
+      - Quick Start: user/quickstart/index.md
+      - Guide: user/guide/index.md
+      - Manual: user/manual/index.md
+  - Administrators:
+      - administrator/index.md
+      - Guide: administrator/guide/index.md
+      - Repository: administrator/repository/index.md
+  - Developers:
+      - developer/index.md
+      - Setup: developer/setup/index.md
+      - Architecture: developer/architecture/index.md
+      - Documentation: developer/documentation/index.md
+      - API:
+          - Core:
+            - Main: developer/api/core/api_main.md
+            - Configuration: developer/api/core/api_conf.md
+            - Settings: developer/api/core/api_settings.md
+            - Utilities: developer/api/core/api_utils.md
+            - Reports:
+                - Generator: developer/api/core/api_reports_generator.md
+                - Layout items: developer/api/core/api_reports_layout_items.md
+                - Manager: developer/api/core/api_reports_manager.md
+                - Variables: developer/api/core/api_reports_variables.md
+            - Extents: developer/api/core/api_pilot_extent.md
+          - Models:
+            - Model base: developer/api/models/api_base.md
+            - Helpers: developer/api/models/api_helpers.md
+            - Report: developer/api/models/api_report.md
+          - GUI:
+            - GUI main: developer/api/gui/api_gui_main.md
+            - Carbon item model: developer/api/gui/api_carbon_layer_model.md
+            - Component item model: developer/api/gui/api_component_items.md
+            - Implementation model editor: developer/api/gui/api_im_editor_dialog.md
+            - Implementation model widget: developer/api/gui/api_im_widget.md
+            - Items selection dialog: developer/api/gui/api_items_selection_dialog.md
+            - Map repeat item widget: developer/api/gui/api_map_repeat_item_widget.md
+            - Model component widget: developer/api/gui/api_model_component_widget.md
+            - NCS Pathway editor: developer/api/gui/api_ncs_pathway_editor.md
+            - Pixel values: developer/api/gui/api_pixel_value_editor.md
+            - Priority layer dialog: developer/api/gui/api_priority_layer.md
+            - Priority group: developer/api/gui/api_priority_group.md
+            - Progress dialog: developer/api/gui/api_progress_dialog.md
+  - About:
+      - Conservation International: about/ci.md
+      - Kartoza: about/kartoza.md
+      - License: about/license.md
+
