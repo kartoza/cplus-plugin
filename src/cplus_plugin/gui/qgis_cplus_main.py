@@ -77,7 +77,7 @@ from ..models.base import (
 from ..models.financial import ActivityNpv
 from ..conf import settings_manager, Settings
 
-from ..lib.extent_check import extent_within_pilot
+from ..lib.extent_check import extent_within_pilot, extent_within_wgs84
 from ..lib.financials import create_npv_pwls
 from ..lib.reports.manager import report_manager, ReportManager
 
@@ -432,8 +432,30 @@ class QgisCplusMain(QtWidgets.QDockWidget, WidgetUi):
             )
         log(tr("Updated all the activities" " with their respective priority layers"))
 
+    def is_user_extent_valid(self) -> bool:
+        """Checks if the user-defined extent are valid.
+
+        An error message will be shown notifying the user of the
+        invalid extent.
+
+        :returns: True if the user-extent defined in step 1 is valid,
+        else False.
+        :rtype: bool
+        """
+        extent = self.extent_box.outputExtent()
+        is_valid = extent_within_wgs84(extent)
+        if not is_valid:
+            msg = tr(
+                "The extent is invalid. Please make sure it within the "
+                "bounds of WGS84."
+            )
+            self.message_bar.pushMessage(msg, level=Qgis.Critical)
+
+        return is_valid
+
     def save_scenario(self):
         """Save current scenario details into settings"""
+        # First check if the bounds are valid
         scenario_name = self.scenario_name.text()
         scenario_description = self.scenario_description.text()
         extent = self.extent_box.outputExtent()
@@ -552,18 +574,19 @@ class QgisCplusMain(QtWidgets.QDockWidget, WidgetUi):
         """Slot raised when scenario extents have changed.
 
         Used to enable/disable default model items if they are within or
-        outside the pilot AOI.
+        outside the pilot AOI and alert user if outside the bounds of WGS84.
         """
         within_pilot_area = extent_within_pilot(new_extent, self.extent_box.outputCrs())
+        within_wgs_84 = self.is_user_extent_valid()
 
-        if not within_pilot_area:
+        if not within_pilot_area and within_wgs_84:
             msg = tr(
                 "Area of interest is outside the pilot area. Please use your "
                 "own NCS pathways, activities and PWLs."
             )
             self.show_message(msg, Qgis.Info)
 
-        else:
+        elif within_pilot_area and within_wgs_84:
             self.message_bar.clearWidgets()
 
         self.activity_widget.enable_default_items(within_pilot_area)
@@ -875,6 +898,17 @@ class QgisCplusMain(QtWidgets.QDockWidget, WidgetUi):
             reference_layer = reference_ncs_pathway.to_map_layer()
             reference_crs = reference_layer.crs()
             reference_pixel_size = reference_layer.rasterUnitsPerPixelX()
+
+            # Check the user extent and warn the user
+            if not self.is_user_extent_valid():
+                QtWidgets.QMessageBox.critical(
+                    self,
+                    self.tr("Update NPV PWLs"),
+                    self.tr(
+                        "Unable to create or update the NPV PWLs due to an invalid extent in Step 1."
+                    ),
+                )
+                return
 
             # Get the reference extent
             source_extent = self.extent_box.outputExtent()
@@ -1286,6 +1320,16 @@ class QgisCplusMain(QtWidgets.QDockWidget, WidgetUi):
         Creates new QgsTask, progress dialog and report manager
          for each new scenario analysis.
         """
+        # Validate extent
+        if not self.is_user_extent_valid():
+            QtWidgets.QMessageBox.critical(
+                self,
+                self.tr("Run Scenario"),
+                self.tr(
+                    "Unable to run the scenario due to an invalid extent in Step 1."
+                ),
+            )
+            return
 
         extent_list = PILOT_AREA_EXTENT["coordinates"]
         default_extent = QgsRectangle(
@@ -2090,6 +2134,9 @@ class QgisCplusMain(QtWidgets.QDockWidget, WidgetUi):
         :type index: int
         """
         if index == 1:
+            # Warn the user again on the invalid extent
+            self.is_user_extent_valid()
+
             self.activity_widget.can_show_error_messages = True
             self.activity_widget.load()
 

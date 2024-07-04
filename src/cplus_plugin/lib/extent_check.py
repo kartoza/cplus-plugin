@@ -46,3 +46,16 @@ def extent_within_pilot(
         new_extent = coordinate_xform.transformBoundingBox(new_extent)
 
     return pilot_extent.contains(new_extent)
+
+
+def extent_within_wgs84(extent: QgsRectangle) -> bool:
+    """Checks if the given extents are within the bounds of WGS84.
+
+    :returns: True if the bounds (which should be in WGS84) are within
+    the bounds of WGS84, else False.
+    :rtype: bool
+    """
+    crs = QgsCoordinateReferenceSystem("EPSG:4326")
+    wgs_bounds = crs.bounds()
+
+    return wgs_bounds.contains(extent)
