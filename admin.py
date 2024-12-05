@@ -213,6 +213,7 @@ def build(
     if clean and output_directory.exists():
         shutil.rmtree(str(output_directory), ignore_errors=True)
     output_directory.mkdir(parents=True, exist_ok=True)
+    plugin_setup(clean)
     copy_source_files(output_directory, tests=tests)
     icon_path = copy_icon(output_directory)
     if icon_path is None:
@@ -550,6 +551,88 @@ def _get_latest_releases(
             else:
                 latest_stable = release
     return latest_stable, latest_experimental
+
+
+###############################################################################
+# Setup dependencies and install package
+###############################################################################
+
+
+def not_comments(lines, s, e):
+    """Return non comment line (does not start with #).
+
+    :param lines: list of line
+    :type lines: list of str
+
+    :param s: start index
+    :type s: int
+
+    :param e: end index
+    :type e: int
+
+    :return: list of line without commented lines
+    :rtype: list of str
+    """
+    return [line for line in lines[s:e] if line[0] != "#"]
+
+
+def read_requirements():
+    """Return a list of runtime and list of test requirements."""
+    with open("requirements.txt") as f:
+        lines = f.readlines()
+    lines = [line for line in [line.strip() for line in lines] if line]
+
+    return not_comments(lines, 0, len(lines)), []
+
+
+def _safe_remove_folder(rootdir):
+    """
+    Supports removing a folder that may have symlinks in it.
+
+    Needed on windows to avoid removing the original files linked to within
+    each folder.
+
+    :param rootdir: Root directory to clean.
+    :type rootdir: str
+    """
+    rootdir = Path(rootdir)
+    if rootdir.is_symlink():
+        rootdir.rmdir()
+    else:
+        folders = [path for path in Path(rootdir).iterdir() if path.is_dir()]
+        for folder in folders:
+            if folder.is_symlink():
+                folder.rmdir()
+            else:
+                shutil.rmtree(folder)
+        files = [path for path in Path(rootdir).iterdir()]
+        for file in files:
+            file.unlink()
+        shutil.rmtree(rootdir)
+
+
+@app.command()
+def plugin_setup(clean=True, pip="pip"):
+    """install plugin dependencies.
+
+    :param clean: Clean out dependencies first.
+    :type clean: bool
+
+    :param pip: Path to pip, usually 'pip' or 'pip3'.
+    :type pip: str
+    """
+    ext_libs = os.path.join(LOCAL_ROOT_DIR, "src", "cplus_plugin", "ext-libs")
+
+    if clean and os.path.exists(ext_libs):
+        _safe_remove_folder(ext_libs)
+
+    os.makedirs(ext_libs, exist_ok=True)
+    runtime, test = read_requirements()
+
+    os.environ["PYTHONPATH"] = ext_libs
+
+    for req in runtime + test:
+        subprocess.check_call([pip, "install", "--upgrade", "-t", ext_libs, req])
 
 
 if __name__ == "__main__":

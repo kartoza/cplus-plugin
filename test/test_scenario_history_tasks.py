@@ -1,3 +1,4 @@
+import os
 import unittest
 import uuid
 from unittest.mock import patch, MagicMock
@@ -7,7 +8,8 @@ from cplus_plugin.api.scenario_history_tasks import (
     DeleteScenarioTask,
 )
 from cplus_plugin.api.request import CplusApiRequest
-from cplus_plugin.models.base import Scenario, SpatialExtent
+from cplus_core.models.base import Scenario, SpatialExtent
+from cplus_core.analysis import TaskConfig
 
 
 class TestFetchScenarioHistoryTask(unittest.TestCase):
@@ -141,15 +143,17 @@ class TestFetchScenarioOutputTask(unittest.TestCase):
         analysis_extent = SpatialExtent(bbox=scenario.extent.bbox)
         analysis_activities = scenario.activities
         analysis_priority_layers_groups = scenario.priority_layer_groups
-        task = FetchScenarioOutputTask(
-            analysis_scenario_name,
-            analysis_scenario_description,
-            analysis_activities,
-            analysis_priority_layers_groups,
-            analysis_extent,
+        task_config = TaskConfig(
             scenario,
-            None,
+            [],
+            analysis_priority_layers_groups,
+            analysis_activities,
+            analysis_activities,
+            pathway_suitability_index=1.0,
+            carbon_coefficient=1.0,
+            base_dir=os.path.join("/tmp", str(scenario.uuid)),
         )
+        task = FetchScenarioOutputTask(task_config, None)
 
         with patch.object(
             FetchScenarioOutputTask, "fetch_scenario_output"
@@ -183,15 +187,17 @@ class TestFetchScenarioOutputTask(unittest.TestCase):
         analysis_extent = SpatialExtent(bbox=scenario.extent.bbox)
         analysis_activities = scenario.activities
         analysis_priority_layers_groups = scenario.priority_layer_groups
-        task = FetchScenarioOutputTask(
-            analysis_scenario_name,
-            analysis_scenario_description,
-            analysis_activities,
-            analysis_priority_layers_groups,
-            analysis_extent,
+        task_config = TaskConfig(
             scenario,
-            None,
+            [],
+            analysis_priority_layers_groups,
+            analysis_activities,
+            analysis_activities,
+            pathway_suitability_index=1.0,
+            carbon_coefficient=1.0,
+            base_dir=os.path.join("/tmp", str(scenario.uuid)),
         )
+        task = FetchScenarioOutputTask(task_config, None)
 
         with patch.object(
             CplusApiRequest,

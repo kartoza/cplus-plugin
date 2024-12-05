@@ -30,7 +30,7 @@ from ..lib.validation.manager import validation_manager
 from .model_description_editor import ModelDescriptionEditorDialog
 from .ncs_pathway_editor_dialog import NcsPathwayEditorDialog
 from .pixel_value_editor_dialog import PixelValueEditorDialog
-from ..models.base import Activity, NcsPathway
+from cplus_core.models.base import Activity, NcsPathway
 from .validation.inspector_dialog import ValidationInspectorDialog
 from .validation.progress_dialog import ValidationProgressDialog
 from ..utils import FileUtils, log

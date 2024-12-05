@@ -1,0 +1,2 @@
+# cplus-core
+git+https://github.com/kartoza/cplus-core.git@v0.0.8

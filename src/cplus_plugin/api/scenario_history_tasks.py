@@ -14,8 +14,8 @@ from .base import BaseScenarioTask
 from .request import CplusApiRequest, CplusApiRequestError
 from .scenario_task_api_client import ScenarioAnalysisTaskApiClient
 from ..conf import settings_manager
-from ..models.base import Scenario
-from ..models.base import SpatialExtent
+from cplus_core.models.base import Scenario
+from cplus_core.analysis import TaskConfig
 from ..utils import log
 
 
@@ -133,38 +133,36 @@ class FetchScenarioOutputTask(ScenarioAnalysisTaskApiClient):
 
     def __init__(
         self,
-        analysis_scenario_name,
-        analysis_scenario_description,
-        analysis_activities,
-        analysis_priority_layers_groups,
-        analysis_extent,
-        scenario,
-        scenario_directory,
+        task_config: TaskConfig,
+        extent_box,
     ):
-        super(FetchScenarioOutputTask, self).__init__(
-            analysis_scenario_name,
-            analysis_scenario_description,
-            analysis_activities,
-            analysis_priority_layers_groups,
-            analysis_extent,
-            scenario,
-            SpatialExtent(scenario.extent.bbox),
-        )
+        super(FetchScenarioOutputTask, self).__init__(task_config, extent_box)
         self.request = CplusApiRequest()
         self.status_pooling = None
         self.logs = []
         self.total_file_output = 0
         self.downloaded_output = 0
         self.scenario_status = None
-        self.scenario_directory = scenario_directory
-        self.scenario_api_uuid = scenario.uuid
-        self.scenario = scenario
+        self.scenario_api_uuid = task_config.scenario.uuid
+        self.scenario = task_config.scenario
 
         self.scenario_directory = None
         self.processing_cancelled = False
         self.scenario_result = None
         self.output_list = None
-        self.created_datetime
+        self.created_datetime = None
+
+    def _get_scenario_directory(self, created_datetime: datetime.datetime) -> str:
+        """Generate scenario directory for current task.
+
+        :return: Path to scenario directory
+        :rtype: str
+        """
+        base_dir = self.task_config.base_dir
+        return os.path.join(
+            f"{base_dir}",
+            "scenario_" f'{created_datetime.strftime("%Y_%m_%d_%H_%M_%S")}',
+        )
 
     def run(self):
         """Execute the task logic.
@@ -183,7 +181,9 @@ class FetchScenarioOutputTask(ScenarioAnalysisTaskApiClient):
             self.created_datetime = datetime.datetime.strptime(
                 self.new_scenario_detail["submitted_on"], "%Y-%m-%dT%H:%M:%SZ"
             )
-            self.scenario_directory = self.get_scenario_directory()
+            self.scenario_directory = self._get_scenario_directory(
+                self.created_datetime
+            )
             if os.path.exists(self.scenario_directory):
                 for file in os.listdir(self.scenario_directory):
                     if file != "processing.log":

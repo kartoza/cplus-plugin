@@ -6,7 +6,7 @@ import dataclasses
 from enum import IntEnum
 import typing
 
-from .base import ModelComponentType
+from cplus_core.models.base import ModelComponentType
 
 
 class RuleType(IntEnum):

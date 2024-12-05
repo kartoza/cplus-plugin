@@ -25,7 +25,7 @@ from qgis.core import (
 )
 from qgis.PyQt import QtCore, QtGui
 
-from ...models.base import ModelComponentType, ScenarioResult
+from cplus_core.models.base import ModelComponentType, ScenarioResult
 from ...utils import FileUtils, get_report_font, log, tr
 
 

@@ -14,7 +14,7 @@ from qgis.core import (
 )
 from qgis.PyQt import QtCore, QtGui
 
-from ...models.base import ScenarioResult
+from cplus_core.models.base import ScenarioResult
 from ...models.helpers import layer_from_scenario_result
 from ...models.report import ScenarioAreaInfo
 from ...utils import calculate_raster_value_area, log, tr

@@ -12,7 +12,7 @@ from qgis.core import QgsMapLayer, QgsRasterLayer, QgsVectorLayer
 
 from qgis.PyQt import QtCore, QtGui
 
-from ..models.base import (
+from cplus_core.models.base import (
     BaseModelComponent,
     BaseModelComponentType,
     Activity,

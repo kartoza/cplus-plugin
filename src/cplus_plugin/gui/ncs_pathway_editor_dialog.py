@@ -16,8 +16,8 @@ from qgis.PyQt.uic import loadUiType
 from .carbon_item_model import CarbonLayerItem, CarbonLayerModel
 from ..conf import Settings, settings_manager
 from ..definitions.defaults import ICON_PATH, USER_DOCUMENTATION_SITE
-from ..models.base import LayerType, NcsPathway
-from ..utils import FileUtils, open_documentation, tr, log
+from cplus_core.models.base import LayerType, NcsPathway
+from ..utils import FileUtils, open_documentation, tr
 
 WidgetUi, _ = loadUiType(
     os.path.join(os.path.dirname(__file__), "../ui/ncs_pathway_editor_dialog.ui")

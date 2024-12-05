@@ -5,7 +5,7 @@ Unit tests for data model helpers
 
 from unittest import TestCase
 
-from cplus_plugin.models.base import NcsPathway
+from cplus_core.models.base import NcsPathway
 from cplus_plugin.models.helpers import (
     clone_layer_component,
     create_ncs_pathway,

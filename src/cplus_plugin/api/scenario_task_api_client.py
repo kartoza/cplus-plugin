@@ -15,8 +15,8 @@ from .request import (
 )
 from ..api.base import BaseFetchScenarioOutput
 from ..conf import settings_manager, Settings
-from ..models.base import Activity, NcsPathway, Scenario
-from ..tasks import ScenarioAnalysisTask
+from cplus_core.models.base import Activity, NcsPathway
+from cplus_core.analysis import ScenarioAnalysisTask, TaskConfig
 from ..utils import FileUtils, CustomJsonEncoder, todict
 
 
@@ -42,43 +42,15 @@ def clean_filename(filename):
 class ScenarioAnalysisTaskApiClient(ScenarioAnalysisTask, BaseFetchScenarioOutput):
     """Prepares and runs the scenario analysis in Cplus API
 
-    :param analysis_scenario_name: Scenario name
-    :type analysis_scenario_name: str
-
-    :param analysis_scenario_description: Scenario description
-    :type analysis_scenario_description: str
-
-    :param analysis_activities: List of activity to be processed
-    :type analysis_activities: typing.List[Activity]
-
-    :param analysis_priority_layers_groups: List of priority layer groups
-    :type analysis_priority_layers_groups: typing.List[dict]
-
-    :param analysis_extent: Extents of the Scenario
-    :type analysis_extent: typing.List[float]
-
     :param scenario: Scenario object
     :type scenario: Scenario
+
+    :param extent_box: Project extent
+    :type extent_box: list of float
     """
 
-    def __init__(
-        self,
-        analysis_scenario_name: str,
-        analysis_scenario_description: str,
-        analysis_activities: typing.List[Activity],
-        analysis_priority_layers_groups: typing.List[dict],
-        analysis_extent: typing.List[float],
-        scenario: Scenario,
-        extent_box,
-    ):
-        super(ScenarioAnalysisTaskApiClient, self).__init__(
-            analysis_scenario_name,
-            analysis_scenario_description,
-            analysis_activities,
-            analysis_priority_layers_groups,
-            analysis_extent,
-            scenario,
-        )
+    def __init__(self, task_config: TaskConfig, extent_box):
+        super().__init__(task_config)
         self.total_file_upload_size = 0
         self.total_file_upload_chunks = 0
         self.uploaded_chunks = 0
@@ -142,7 +114,7 @@ class ScenarioAnalysisTaskApiClient(ScenarioAnalysisTask, BaseFetchScenarioOutpu
         :rtype: bool
         """
         self.request = CplusApiRequest()
-        self.scenario_directory = self.get_scenario_directory()
+        self.scenario_directory = self.task_config.base_dir
         FileUtils.create_new_dir(self.scenario_directory)
 
         try:
@@ -516,8 +488,10 @@ class ScenarioAnalysisTaskApiClient(ScenarioAnalysisTask, BaseFetchScenarioOutpu
         snap_rescale = self.get_settings_value(
             Settings.RESCALE_VALUES, default=False, setting_type=bool
         )
-        resampling_method = self.get_settings_value(
-            Settings.RESAMPLING_METHOD, default=0
+        resampling_method = int(
+            self.get_settings_value(
+                Settings.RESAMPLING_METHOD, default=0, setting_type=int
+            )
         )
         ncs_with_carbon = self.get_settings_value(
             Settings.NCS_WITH_CARBON, default=False, setting_type=bool

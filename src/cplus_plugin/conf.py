@@ -29,7 +29,7 @@ from .definitions.constants import (
     UUID_ATTRIBUTE,
 )
 from .definitions.defaults import PRIORITY_LAYERS
-from .models.base import (
+from cplus_core.models.base import (
     Activity,
     NcsPathway,
     Scenario,

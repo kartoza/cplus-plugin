@@ -14,7 +14,7 @@ from qgis.core import (
     QgsRectangle,
 )
 
-from .base import (
+from cplus_core.models.base import (
     BaseModelComponent,
     BaseModelComponentType,
     Activity,

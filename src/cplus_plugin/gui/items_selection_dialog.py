@@ -11,7 +11,7 @@ from qgis.PyQt import QtCore, QtGui, QtWidgets, QtNetwork
 
 from qgis.PyQt.uic import loadUiType
 
-from ..models.base import Activity, PriorityLayer
+from cplus_core.models.base import Activity, PriorityLayer
 
 from ..conf import settings_manager
 

@@ -20,7 +20,7 @@ from cplus_plugin.definitions.constants import (
     UUID_ATTRIBUTE,
 )
 from cplus_plugin.definitions.defaults import PILOT_AREA_EXTENT
-from cplus_plugin.models.base import (
+from cplus_core.models.base import (
     Activity,
     LayerType,
     NcsPathway,

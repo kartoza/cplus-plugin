@@ -19,7 +19,7 @@ from .model_component_widget import (
     ActivityComponentWidget,
     NcsComponentWidget,
 )
-from ..models.base import Activity, NcsPathway
+from cplus_core.models.base import Activity, NcsPathway
 
 from ..utils import FileUtils
 

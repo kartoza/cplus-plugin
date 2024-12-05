@@ -29,7 +29,7 @@ from ..definitions.constants import (
     ACTIVITY_SCENARIO_STYLE_ATTRIBUTE,
 )
 from ..definitions.defaults import ICON_PATH, USER_DOCUMENTATION_SITE
-from ..models.base import Activity
+from cplus_core.models.base import Activity
 from ..utils import FileUtils, generate_random_color, open_documentation, tr
 
 WidgetUi, _ = loadUiType(

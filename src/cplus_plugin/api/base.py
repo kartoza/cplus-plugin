@@ -13,7 +13,7 @@ from qgis.PyQt import QtCore
 from qgis.core import QgsTask
 
 from .request import CplusApiRequest
-from ..models.base import Scenario, ScenarioResult, NcsPathway, Activity
+from cplus_core.models.base import Scenario, ScenarioResult, NcsPathway, Activity
 
 
 class BaseScenarioTask(QgsTask):

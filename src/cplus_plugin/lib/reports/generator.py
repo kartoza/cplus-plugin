@@ -59,7 +59,7 @@ from ...definitions.defaults import (
     PRIORITY_GROUP_WEIGHT_TABLE_ID,
 )
 from .layout_items import BasicScenarioDetailsItem, CplusMapRepeatItem
-from ...models.base import Activity, ScenarioResult
+from cplus_core.models.base import Activity, ScenarioResult
 from ...models.helpers import extent_to_project_crs_extent
 from ...models.report import (
     BaseReportContext,

@@ -21,7 +21,7 @@ from .configs import (
     resolution_validation_config,
 )
 from .feedback import ValidationFeedback
-from ...models.base import LayerModelComponent, ModelComponentType, NcsPathway
+from cplus_core.models.base import LayerModelComponent, ModelComponentType, NcsPathway
 from ...models.validation import (
     RuleConfiguration,
     RuleInfo,

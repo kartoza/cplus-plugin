@@ -14,7 +14,7 @@ from qgis.PyQt import (
 )
 from qgis.PyQt.uic import loadUiType
 
-from ..models.base import PriorityLayer
+from cplus_core.models.base import PriorityLayer
 
 from ..conf import settings_manager
 from ..utils import FileUtils, open_documentation
