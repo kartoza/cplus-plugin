@@ -822,7 +822,7 @@ class CplusSettings(Ui_DlgSettings, QgsOptionsPageWidget):
 
         source_type_int = settings_manager.get_value(
             Settings.IRRECOVERABLE_CARBON_SOURCE_TYPE,
-            default=DataSourceType.UNDEFINED.value,
+            default=DataSourceType.ONLINE.value,
             setting_type=int,
         )
         if source_type_int == DataSourceType.LOCAL.value:
