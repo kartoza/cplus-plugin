@@ -233,7 +233,7 @@ license: This program is free software; you can redistribute it and/or modify it
   
     **3. Hide:** This  option hides the Progress Dialog Box.
 
-    **4. **Cancel:** Click on the `Cancel` button to terminate the report generation process. Upon clicking this button, it will transform into the `Close` button. Click on the `Close` button to dismiss the pop-up window.
+    **4. Cancel:** Click on the `Cancel` button to terminate the report generation process. Upon clicking this button, it will transform into the `Close` button. Click on the `Close` button to dismiss the pop-up window.
 
     ### View Task Status Online
     After clicking on the `Hide` button this button will be enabled to view the task status.
@@ -255,7 +255,5 @@ license: This program is free software; you can redistribute it and/or modify it
 * Users can see in the report that the custom metrics table is included.
 
 ![Custom Metrics Table Report](img/step-4-34.png)
-
-
 
 Click [here](logs.md) to explore the log section.

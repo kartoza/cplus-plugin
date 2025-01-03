@@ -16,15 +16,15 @@ license: This program is free software; you can redistribute it and/or modify it
 
 ![UI Step 3](img/manual-step3.png)
 
-- **Priority groups**: Users can define different priority groups to which Priority Weighting Layers (PWLs) can be assigned. These groups represent different categories or themes that contribute to the overall analysis.
+- **Priority groups**: Users can define different priority groups to which priority weighting layers (PWLs) can be assigned. These groups represent different categories or themes that contribute to the overall analysis.
 
-- ![add button](img/symbologyAdd.svg): Add a new Priority group.
+- ![add button](img/symbologyAdd.svg): Add a new priority group.
 
-- ![edit button](img/mActionToggleEditing.svg): Edit the selected Priority group.
+- ![edit button](img/mActionToggleEditing.svg): Edit the selected priority group.
 
-- ![remove button](img/symbologyRemove.svg): Remove the selected Priority group.
+- ![remove button](img/symbologyRemove.svg): Remove the selected priority group.
 
-- **Priority weighting layers (PWL)**: Users can assign importance values to each priority group by associating them with Priority Weighted Layers. These layers represent the spatial data layers or attributes that contribute to the analysis.
+- **Priority Weighting Layers (PWL)**: Users can assign importance values to each priority group by associating them with priority weighted layers. These layers represent the spatial data layers or attributes that contribute to the analysis.
 
 - ![right arrow](img/cplus_right_arrow.svg): Remove the selected PWL from the priority group.
 
@@ -76,7 +76,7 @@ The primary purpose of the NPV Tool is to help users prioritise activities by pr
 
 5. **Copy icon:** The user can copy the NPV by clicking on the copy icon available next to the net present value per hectare box.
 
-6. **User-defined NPV checkbox:** By enabling this checkbox we can manually set the `Net present value per hectare` value.
+6. **User-defined NPV Checkbox:** By enabling this checkbox we can manually set the `Net present value per hectare` value.
 
 7. **Min/Max Normalisation Range:** It is recommended to keep the `Use computed NPVs` check box enabled (default option). This ensures that the minimum and maximum normalisation values are synced and automatically updated based on user input. The min/max values will be based on enabled NPV parameters for activities. Disabled NPV parameters will be excluded from the computation.
 

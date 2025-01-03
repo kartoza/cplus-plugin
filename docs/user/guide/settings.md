@@ -108,6 +108,30 @@ Masking layers are used to specify areas that should be excluded from further an
 - Click on the `Edit` icon to edit the layer.
 - Click on the `Minus` icon to remove the layer.
 
+**Irrecoverable Carbon Reference Layer:** 
+
+The `Irrecoverable Carbon` layer is used in a calculation with the protect pathways to calculate the total irrecoverable carbon per activity.
+
+**Local Path**
+
+To use the `Local path` you are required to click on the 1️⃣ `Local path` radio button, after this enter the local path of the irrecoverable carbon layer in the 2️⃣ `Input field` manually or click on the 3️⃣ `Three dots` to select the file from the system.
+
+![Irrecoverable Carbon 1](./img/settings-21.png)
+
+**Online Source**
+
+To use the `Online source`, you are required to click on the 1️⃣ `Online source` radio button. After that, enter the source URL in the 2️⃣ `URL` field and provide the location and name of the source in the 3️⃣ `Save as` field manually, or click on the 4️⃣ `Three dots` to select the location from the file explorer. After filling in the details, click on the 5️⃣ `Start download` button to download the Irrecoverable Carbon layer. You can track the download progress in the 6️⃣ `Download progress` field. There are three phases in the download process: `Download not started`, `Download ongoing`, and `Download successful`.
+
+![Irrecoverable Carbon 2](./img/settings-22.png)
+
+If the `Irrecoverable Carbon` is not fount then you will receive the following error.
+
+![Error](./img/settings-24.png)
+
+* If the download process is interrupted, you will encounter an error message.
+
+    ![Download Error](./img/settings-23.png)
+
 **Trends.Earth Account Information:**
 
 >NOTE: User need to register and login with a Trends.Earth account to use the online API for processing with CPLUS.

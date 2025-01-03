@@ -60,13 +60,20 @@ In this Method, you will create a new NCS pathway by providing a name, descripti
 
 - In the `Description` field, enter a brief description of the NCS pathway. This description will provide context and help others understand the purpose of the pathway.
 
-**Step 2 Select Map Layer**
+**Step 2 Select Pathways Type**
+
+* Pathway Type: Select the type of the NCS pathway.
+    - **Protect:** Protect the world’s natural ecosystems from unsustainable practices and degradation.
+    - **Manage:** Farming systems and working lands must shift from net carbon emitters to carbon sinks.
+    - **Restore:** Restore ecosystem types and globally can reduce global greenhouse gas emissions and store additional carbon up to 3 gigatons annually.
+
+**Step 3 Select Map Layer**
 
 - In the `Map Layer` dropdown menu, select the map layer that is relevant to your NCS pathway. You can choose from the list of available map layers that you have downloaded and imported into the system.
 
 For example, if you are creating an NCS pathway for Agroforestry, you would select the `Agroforestry` map layer.
 
-**Step 3 Select Carbon Layer**
+**Step 4 Select Carbon Layer**
 
 - Click on the plus icon next to the `Carbon Layer` field.
 
@@ -97,13 +104,13 @@ In this method, you will add a new NCS pathway using online defaults. This optio
 
 After selecting the online default, the system will automatically fill in the name and description fields for you. You can then add a carbon layer from the available options in the system.
 
-![After online default](./img/plugin-step2-2.png)
+![After online default](./img/plugin-step2-13.png)
 
 <blockquote> If the NCS pathway is broken (e.g. layer or file cannot be found), the pathway text
 will have an exclamation mark next to it. The user will need to rectify the issue before continuing to
 step 3. </blockquote>
 
-![CPLUS add pathway](img/plugin-pathway-editor.png)
+![CPLUS add pathway](img/plugin-step2-2.png)
 
 *Figure 3: NCS Pathway creator/editor*
 
@@ -145,21 +152,14 @@ Activity Masking enables users to exclude specific areas from pathways. This fun
 
 Imagine planning a journey or mapping an area, and you want to exclude specific region like restricted zones, private properties, or hazardous locations. This masking tool allows you to mark those areas, ensuring they are excluded from your plans or analysis. It is like instructing the system, avoid these areas, enabling you to focus on relevant zones and create more precise and efficient plans.
 
-* As you can see in the below image, shape 1️⃣, shape 2️⃣, and shape 3️⃣ are masks.
-
-    ![Activity Mask](./img/plugin-step2-6.png)
-
 * Here is the list of activities displayed without applying any mask. This means all areas are included, and no regions have been excluded or hidden from the analysis.
 
     ![Without Activity Mask 1](./img/plugin-step2-7.png)
 
-    ![Without Activity Mask 2](./img/plugin-step2-8.png)
     
 * After applying the mask, the specified area becomes restricted for that particular activity. This ensures that no operations or tasks are carried out within that area, effectively excluding it from the analysis. As shown in the image below, after applying the mask, the specified area is marked as restricted for that particular activity. This restriction ensures that no operations or tasks related to the specific activity take place within the designated area, effectively excluding it from the further analysis.
 
     ![With Activity Mask 1](./img/plugin-step2-9.png)
-
-    ![With Activity Mask 2](./img/plugin-step2-10.png)
 
 #### How to add Activity Mask?
 

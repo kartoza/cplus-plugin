@@ -28,6 +28,10 @@ license: This program is free software; you can redistribute it and/or modify it
 
     - Name: Enter the name of the NCS pathway.
     - Description: Enter the description of the NCS pathway.
+    - Pathway Type: Select the type of the NCS pathway.
+        - **Protect:** Protect the world’s natural ecosystems from unsustainable practices and degradation.
+        - **Manage:** Farming systems and working lands must shift from net carbon emitters to carbon sinks.
+        - **Restore:** Restore ecosystem types and globally can reduce global greenhouse gas emissions and store additional carbon up to 3 gigatons annually.
     - Map Layer: Choose the map layer from the downloaded data available in the system.
     
     For example add map layer for Agroforestry
@@ -54,7 +58,7 @@ license: This program is free software; you can redistribute it and/or modify it
 
     ![Online default](./img/manual-step2-5.png)
 
-- **Activities**: Each selected activity will be created in used to perform the analysis.
+- **Activities**: Each selected activity will be created and used to perform the analysis.
 
 - **Description**: A description of the activity or pathway selected.
 
@@ -96,29 +100,21 @@ Activity Masking enables users to exclude specific areas from analysis. This fun
 
 Imagine planning a journey or mapping an area, and you want to exclude specific region like restricted zones, private properties, or hazardous locations. This masking tool allows you to mark those areas, ensuring they are excluded from your plans or analysis. It is like instructing the system, avoid these areas, enabling you to focus on relevant zones and create more precise and efficient plans.
 
-* As you can see in the below image, shape 1️⃣, shape 2️⃣, and shape 3️⃣ are masks.
-
-    ![Activity Mask](./img/manual-step2-11.png)
-
 * Here are activities displayed without applying any activity mask. This means all areas are included, and no regions have been excluded or hidden from the analysis.
 
     ![Without Activity Mask 1](./img/manual-step2-7.png)
-
-    ![Without Activity Mask 2](./img/manual-step2-8.png)
     
 * After applying the mask, the specified area becomes restricted for any activities or work. This ensures that no operations or tasks are carried out within that area, effectively excluding it from the analysis. As shown in the image below, after applying the mask, the specified area is marked as restricted for that particular activity. This restriction ensures that no operations or tasks related to the specific activity take place within the designated area, effectively excluding it from the further analysis.
 
     ![With Activity Mask 1](./img/manual-step2-9.png)
 
-    ![With Activity Mask 2](./img/manual-step2-10.png)
-
 ### Apply Activity Mask
 
 ![Activity Mask](./img/manual-step2-6.png)
 
-1. **✅ Activity Mask**: By checking this user will be able add activity mask.
+1. **✅ Activity Mask**: By checking this, the user will be able add an activity mask.
 
-2. ![add button](img/symbologyAdd.svg): Add new activity mask. Click on this button to add a new activity mask. After clicking on the button, a new window will open from where user can select the shape file.
+2. ![add button](img/symbologyAdd.svg): Add new activity mask. Click on this button to add a new activity mask. After clicking on the button, a new window will open from where user can select the shapefile.
 
     ![Activity Mask Selection](./img/manual-step2-12.png)
 
@@ -159,7 +155,7 @@ Imagine planning a journey or mapping an area, and you want to exclude specific 
 
 ## Ordering of the pixel values for the scenario output
 
-A user can order the stack using the **Style pixel value editor**.
+A user can order the stack using the `Style Pixel Value Editor`.
 
 ![UI Step 2](img/style_pixel_value_editor.png)
 
